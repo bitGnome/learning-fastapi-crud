@@ -1,4 +1,4 @@
-FROM python:3.11.0-alpine
+FROM mcr.microsoft.com/vscode/devcontainers/python:3
 
 WORKDIR /usr/src/app
 
@@ -7,10 +7,7 @@ ENV PTYHONBUFFERED 1
 
 COPY ./requirements.txt /usr/src/app/requirements.txt
 
-RUN set -eux \
-    && apk add --no-cache --virtual .build-deps build-base \
-        openssl-dev libffi-dev gcc musl-dev python3-dev \
-        postgresql-dev bash \
+RUN apt-get update \
     && pip install --upgrade pip setuptools wheel \
     && pip install -r /usr/src/app/requirements.txt \
     && rm -rf /root/.cache/pip \
